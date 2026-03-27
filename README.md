@@ -79,9 +79,11 @@ DB_Master/LinkedServer/Create_LinkedServer.sql
 HappyBites/
 │
 ├── DBMaster/
-│   └── Database/
-│       ├── Create_tables.sql
-│       └── Insert_data.sql
+│   ├── Database/
+│   │   ├── Create_tables.sql
+│   │   └── Insert_data.sql
+│   └── LinkedServer/
+│       └──Create_LinkedServer.sql
 ├── HappyBites_Q6/
 │   ├── Database/
 │   │   ├── Create_tables.sql
