@@ -223,9 +223,9 @@ Trong trường hợp nguyên liệu không đủ, hệ thống sẽ không cho 
 ### 5. Procedure: TaoDonHang (Tạo đơn hàng)
 
 ```sql
-EXEC TaoDonHang 'DH08', 'NV01', 'KH11';
+EXEC TaoDonHang 'DH07', 'NV01', 'KH11';
 
-SELECT * FROM DON_HANG WHERE MaDH = 'DH08';
+SELECT * FROM DON_HANG WHERE MaDH = 'DH07';
 ```
 
 **Mô tả:**
