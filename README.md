@@ -38,7 +38,7 @@ Each branch operates independently, handling its own transactions and inventory 
 
 ## Database Design (ERD)
 
-![ERD](docs/ERD.png)
+![ERD](docs/ERD_HappyBites.png)
 
 ---
 
@@ -85,7 +85,7 @@ HappyBites/
 │       ├── TinhTongTien.sql
 │       └── TruKho.sql
 ├── docs/
-│   └── ![ERD](docs/ERD_HappyBites.png)
+│   └── ERD_HappyBites.png
 └── README.md
 ```
 
