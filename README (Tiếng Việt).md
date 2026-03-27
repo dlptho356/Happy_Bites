@@ -144,46 +144,148 @@ HappyBites/
 
 ---
 
-## Kịch bản kiểm thử (Trigger - Trừ tồn kho)
+## Kịch bản kiểm thử
 
-### Bước 1: Kiểm tra tồn kho trước khi tạo đơn
-
-```sql
-SELECT * FROM TON_KHO;
-```
-
-### Bước 2: Tạo đơn hàng
-
-```sql
-INSERT INTO KHACH_HANG VALUES ('KH11', N'Tên của bạn', 'SĐT của bạn');
-
-INSERT INTO DON_HANG VALUES ('DH05', GETDATE(), 0, 'NV01', 'KH11');
-```
-
-### Bước 3: Thêm chi tiết đơn hàng
-
-```sql
-INSERT INTO CHI_TIET_DON_HANG VALUES ('DH05', 'SP01', 2);
-```
-
-### Bước 4: Kiểm tra lại tồn kho
-
-```sql
-SELECT * FROM TON_KHO;
-```
-
-**Kết quả mong đợi:**
-Tồn kho nguyên liệu sẽ tự động giảm dựa trên công thức sản phẩm (CONG_THUC) thông qua trigger.
+Các kịch bản dưới đây minh họa cách hoạt động của trigger và stored procedure trong hệ thống.
 
 ---
 
-## Ghi chú
+### 1. Trigger: SetDonGia (Tự động gán đơn giá)
 
-* Trigger được thiết kế để xử lý insert nhiều dòng
-* Mỗi chi nhánh quản lý tồn kho riêng biệt
-* Không có truy cập trực tiếp giữa các database chi nhánh
+Tự động gán đơn giá khi thêm chi tiết đơn hàng.
+
+```sql
+INSERT INTO CHI_TIET_DON_HANG (MaDH, MaSP, Soluong)
+VALUES ('DH06', 'SP03', 2);
+
+SELECT * FROM CHI_TIET_DON_HANG WHERE MaDH = 'DH06';
+```
+
+**Mô tả:**
+`Dongia` được tự động lấy từ `SAN_PHAM.Giaban`.
 
 ---
+
+### 2. Trigger: TinhTongTien (Tính tổng tiền đơn hàng)
+
+Tự động cập nhật tổng tiền khi thêm chi tiết đơn hàng.
+
+```sql
+SELECT * FROM DON_HANG WHERE MaDH = 'DH06';
+
+INSERT INTO CHI_TIET_DON_HANG VALUES ('DH06', 'SP02', 3);
+
+SELECT * FROM DON_HANG WHERE MaDH = 'DH06';
+```
+
+**Mô tả:**
+`Tongtien` được cập nhật bằng tổng (`Soluong × Dongia`).
+
+---
+
+### 3. Trigger: CongKho (Tăng tồn kho)
+
+Tăng số lượng tồn kho khi nhập nguyên liệu.
+
+```sql
+SELECT * FROM TON_KHO WHERE MaNL = 'NL01';
+
+INSERT INTO CHI_TIET_NHAP VALUES (15, 'NK03', 5000, 'NL01');
+
+SELECT * FROM TON_KHO WHERE MaNL = 'NL01';
+```
+
+**Mô tả:**
+`Soluongton` tăng theo số lượng nhập.
+
+---
+
+### 4. Trigger: TruKho (Trừ tồn kho)
+
+Giảm tồn kho dựa trên công thức sản phẩm khi phát sinh đơn hàng.
+
+```sql
+SELECT * FROM TON_KHO;
+
+INSERT INTO CHI_TIET_DON_HANG VALUES ('DH06', 'SP01', 2);
+
+SELECT * FROM TON_KHO;
+```
+
+**Mô tả:**
+Tồn kho giảm theo công thức trong bảng `CONG_THUC`.
+Trong trường hợp nguyên liệu không đủ, hệ thống sẽ không cho phép xuất đơn hàng và thông báo hết nguyên liệu.
+
+---
+
+## Stored Procedures
+
+### 5. Procedure: TaoDonHang (Tạo đơn hàng)
+
+```sql
+EXEC TaoDonHang 'DH08', 'NV01', 'KH11';
+
+SELECT * FROM DON_HANG WHERE MaDH = 'DH08';
+```
+
+**Mô tả:**
+Tạo một đơn hàng mới trong hệ thống.
+
+---
+
+### 6. Procedure: ThemSPVaoDon (Thêm sản phẩm vào đơn)
+
+```sql
+EXEC ThemSPVaoDon 'DH08', 'SP10', 2;
+
+SELECT * FROM CHI_TIET_DON_HANG WHERE MaDH = 'DH08';
+```
+
+**Mô tả:**
+Thêm sản phẩm vào đơn hàng và tự động kích hoạt các trigger liên quan.
+
+---
+
+### 7. Procedure: XemTonKho (Xem tồn kho)
+
+```sql
+EXEC XemTonKho;
+```
+
+**Mô tả:**
+Hiển thị danh sách nguyên liệu và số lượng tồn kho hiện tại.
+
+---
+
+### 8. Procedure: BaoCaoBanHang (Báo cáo bán hàng)
+
+```sql
+EXEC BaoCaoBanHang;
+```
+
+**Mô tả:**
+Trả về dữ liệu tổng hợp phục vụ phân tích doanh thu và bán hàng.
+
+---
+
+### 9. Luồng hoạt động tổng thể
+
+```sql
+EXEC TaoDonHang 'DH08', 'NV01', 'KH11';
+
+EXEC ThemSPVaoDon 'DH08', 'SP01', 2;
+
+SELECT * FROM DON_HANG WHERE MaDH = 'DH08';
+SELECT * FROM TON_KHO;
+```
+
+**Mô tả:**
+
+* Đơn giá được tự động gán
+* Tổng tiền được tính tự động
+* Tồn kho được cập nhật theo công thức
+* Nếu nguyên liệu không đủ, đơn hàng sẽ không được xử lý
+
 
 ## Tác giả
 
