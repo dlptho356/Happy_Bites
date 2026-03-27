@@ -36,6 +36,37 @@ Each branch operates independently, handling its own transactions and inventory 
 
 ---
 
+## Distributed Query with Linked Server
+
+The DBMaster is configured to access data from branch databases (Q6, Q7, Q8) using Linked Server.
+
+This allows centralized querying and reporting without direct data modification across branches.
+
+### Key Points
+
+* DBMaster can query data from branch databases via Linked Server
+* Branch databases remain independent and do not communicate with each other
+* Cross-database queries are executed only from DBMaster
+
+### Example Query
+
+```sql
+SELECT * FROM [LS_Q7].[HappyBites_Q7].dbo.DON_HANG;
+```
+
+---
+
+## Linked Server Setup
+
+A SQL script is provided to create Linked Servers for connecting DBMaster with branch databases.
+
+Location:
+
+```plaintext
+DB_Master/LinkedServer/Create_LinkedServer.sql
+```
+
+
 ## Database Design (ERD)
 
 ![ERD](HappyBites%203.0/docs/ERD_HappyBites.png)
