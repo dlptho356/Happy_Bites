@@ -11,8 +11,8 @@ Each branch operates independently, handling its own transactions and inventory 
 
 ## System Architecture
 
-* DBMaster: Centralized database
-* Q6, Q7, Q8: Independent branch databases
+* HappyBites_DBMaster: Centralized database
+* HappyBites_Q6, HappyBites_Q7, HappyBites_Q8: Independent branch databases
 * No direct communication between branches
 * Business logic (triggers, procedures) is processed locally at each branch
 
@@ -95,10 +95,10 @@ HappyBites/
 
 1. Execute scripts for each database:
 
-   * DBMaster
-   * Q6
-   * Q7
-   * Q8
+   * HappyBites_DBMaster
+   * HappyBites_Q6
+   * HappyBites_Q7
+   * HappyBites_Q8
 
 2. Ensure each branch database includes:
 
@@ -121,15 +121,15 @@ SELECT * FROM TON_KHO;
 ### Step 2: Create order
 
 ```sql
-INSERT INTO KHACH_HANG VALUES ('KH01', N'Nguyen Van A', '0123456789');
+INSERT INTO KHACH_HANG VALUES ('KH11', N'yourname', 'yournumber');
 
-INSERT INTO DON_HANG VALUES ('DH01', GETDATE(), 0, 'NV01', 'KH01');
+INSERT INTO DON_HANG VALUES ('DH05', GETDATE(), 0, 'NV01', 'KH11');
 ```
 
 ### Step 3: Insert order details
 
 ```sql
-INSERT INTO CHI_TIET_DON_HANG VALUES ('DH01', 'SP01', 2);
+INSERT INTO CHI_TIET_DON_HANG VALUES ('DH05', 'SP01', 2);
 ```
 
 ### Step 4: Verify inventory update
@@ -153,4 +153,4 @@ Inventory is automatically reduced based on the product recipe (CONG_THUC) via t
 
 ## Author
 
-Doan Tho
+Doan Le Phuoc Tho
