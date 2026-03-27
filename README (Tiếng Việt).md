@@ -156,9 +156,9 @@ Tự động gán đơn giá khi thêm chi tiết đơn hàng.
 
 ```sql
 INSERT INTO CHI_TIET_DON_HANG (MaDH, MaSP, Soluong)
-VALUES ('DH06', 'SP03', 2);
+VALUES ('DH04', 'SP03', 2);
 
-SELECT * FROM CHI_TIET_DON_HANG WHERE MaDH = 'DH06';
+SELECT * FROM CHI_TIET_DON_HANG WHERE MaDH = 'DH04';
 ```
 
 **Mô tả:**
@@ -171,11 +171,11 @@ SELECT * FROM CHI_TIET_DON_HANG WHERE MaDH = 'DH06';
 Tự động cập nhật tổng tiền khi thêm chi tiết đơn hàng.
 
 ```sql
-SELECT * FROM DON_HANG WHERE MaDH = 'DH06';
+SELECT * FROM DON_HANG WHERE MaDH = 'DH04';
 
-INSERT INTO CHI_TIET_DON_HANG VALUES ('DH06', 'SP02', 3);
+INSERT INTO CHI_TIET_DON_HANG VALUES ('DH04', 'SP02', 3);
 
-SELECT * FROM DON_HANG WHERE MaDH = 'DH06';
+SELECT * FROM DON_HANG WHERE MaDH = 'DH04';
 ```
 
 **Mô tả:**
@@ -207,7 +207,7 @@ Giảm tồn kho dựa trên công thức sản phẩm khi phát sinh đơn hàn
 ```sql
 SELECT * FROM TON_KHO;
 
-INSERT INTO CHI_TIET_DON_HANG VALUES ('DH06', 'SP01', 2);
+INSERT INTO CHI_TIET_DON_HANG VALUES ('DH04', 'SP01', 2);
 
 SELECT * FROM TON_KHO;
 ```
@@ -223,9 +223,9 @@ Trong trường hợp nguyên liệu không đủ, hệ thống sẽ không cho 
 ### 5. Procedure: TaoDonHang (Tạo đơn hàng)
 
 ```sql
-EXEC TaoDonHang 'DH07', 'NV01', 'KH11';
+EXEC TaoDonHang 'DH05', 'NV01', 'KH11';
 
-SELECT * FROM DON_HANG WHERE MaDH = 'DH07';
+SELECT * FROM DON_HANG WHERE MaDH = 'DH05';
 ```
 
 **Mô tả:**
@@ -236,9 +236,9 @@ Tạo một đơn hàng mới trong hệ thống.
 ### 6. Procedure: ThemSPVaoDon (Thêm sản phẩm vào đơn)
 
 ```sql
-EXEC ThemSPVaoDon 'DH08', 'SP10', 2;
+EXEC ThemSPVaoDon 'DH05', 'SP10', 2;
 
-SELECT * FROM CHI_TIET_DON_HANG WHERE MaDH = 'DH08';
+SELECT * FROM CHI_TIET_DON_HANG WHERE MaDH = 'DH05';
 ```
 
 **Mô tả:**
@@ -271,11 +271,11 @@ Trả về dữ liệu tổng hợp phục vụ phân tích doanh thu và bán h
 ### 9. Luồng hoạt động tổng thể
 
 ```sql
-EXEC TaoDonHang 'DH08', 'NV01', 'KH11';
+EXEC TaoDonHang 'DH06', 'NV01', 'KH11';
 
-EXEC ThemSPVaoDon 'DH08', 'SP01', 2;
+EXEC ThemSPVaoDon 'DH06', 'SP01', 2;
 
-SELECT * FROM DON_HANG WHERE MaDH = 'DH08';
+SELECT * FROM DON_HANG WHERE MaDH = 'DH06';
 SELECT * FROM TON_KHO;
 ```
 
