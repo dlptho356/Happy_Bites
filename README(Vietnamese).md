@@ -36,6 +36,13 @@ Mỗi cơ sở dữ liệu chi nhánh hoạt động độc lập, xử lý giao
 
 ---
 
+## Database Design (ERD)
+
+![ERD](docs/ERD_HappyBites.png)
+
+---
+
+
 ## Cấu trúc dự án
 
 ```
