@@ -143,44 +143,149 @@ HappyBites/
 
 ---
 
-## Test Scenario (Trigger - Inventory Deduction)
+## Test Scenarios
 
-### Step 1: Check inventory before order
-
-```sql
-SELECT * FROM TON_KHO;
-```
-
-### Step 2: Create order
-
-```sql
-INSERT INTO KHACH_HANG VALUES ('KH11', N'yourname', 'yournumber');
-
-INSERT INTO DON_HANG VALUES ('DH05', GETDATE(), 0, 'NV01', 'KH11');
-```
-
-### Step 3: Insert order details
-
-```sql
-INSERT INTO CHI_TIET_DON_HANG VALUES ('DH05', 'SP01', 2);
-```
-
-### Step 4: Verify inventory update
-
-```sql
-SELECT * FROM TON_KHO;
-```
-
-**Expected Result:**
-Inventory is automatically reduced based on the product recipe (CONG_THUC) via trigger execution.
+The following scenarios demonstrate how triggers and stored procedures operate within the system.
 
 ---
 
-## Notes
+### 1. Trigger: SetDonGia (Auto Set Unit Price)
 
-* Triggers are designed to handle multi-row insert operations
-* Each branch manages its own inventory independently
-* No direct data access between branch databases
+Automatically assigns the unit price when inserting order details.
+
+```sql
+INSERT INTO CHI_TIET_DON_HANG (MaDH, MaSP, Soluong)
+VALUES ('DH04', 'SP03', 2);
+
+SELECT * FROM CHI_TIET_DON_HANG WHERE MaDH = 'DH04';
+```
+
+**Description:**
+`Dongia` is automatically retrieved from `SAN_PHAM.Giaban`.
+
+---
+
+### 2. Trigger: TinhTongTien (Calculate Order Total)
+
+Automatically updates the total amount when order details are inserted.
+
+```sql
+SELECT * FROM DON_HANG WHERE MaDH = 'DH04';
+
+INSERT INTO CHI_TIET_DON_HANG VALUES ('DH04', 'SP02', 3);
+
+SELECT * FROM DON_HANG WHERE MaDH = 'DH04';
+```
+
+**Description:**
+`Tongtien` is updated as the sum of (`Soluong × Dongia`).
+
+---
+
+### 3. Trigger: CongKho (Increase Inventory)
+
+Increases inventory when ingredients are imported.
+
+```sql
+INSERT INTO NHAP_KHO VALUES('NK03', GETDATE(), 'NVQ6_05')
+
+SELECT * FROM TON_KHO WHERE MaNL = 'NL01';
+
+INSERT INTO CHI_TIET_NHAP VALUES (15, 'NK03', 5000, 'NL01');
+
+SELECT * FROM TON_KHO WHERE MaNL = 'NL01';
+```
+
+**Description:**
+`Soluongton` increases according to the imported quantity.
+
+---
+
+### 4. Trigger: TruKho (Decrease Inventory)
+
+Decreases inventory based on product recipes when an order is placed.
+
+```sql
+SELECT * FROM TON_KHO;
+
+INSERT INTO CHI_TIET_DON_HANG VALUES ('DH04', 'SP01', 2);
+
+SELECT * FROM TON_KHO;
+```
+
+**Description:**
+Inventory is reduced based on the recipe defined in `CONG_THUC`.
+If ingredients are insufficient, the system will prevent order processing and notify that the inventory is out of stock.
+
+---
+
+## Stored Procedures
+
+### 5. Procedure: TaoDonHang (Create Order)
+
+```sql
+EXEC TaoDonHang 'DH05', 'NVQ6_01', 'KH10';
+
+SELECT * FROM DON_HANG WHERE MaDH = 'DH05';
+```
+
+**Description:**
+Creates a new order in the system.
+
+---
+
+### 6. Procedure: ThemSPVaoDon (Add Product to Order)
+
+```sql
+EXEC ThemSPVaoDon 'DH05', 'SP10', 2;
+
+SELECT * FROM CHI_TIET_DON_HANG WHERE MaDH = 'DH05';
+```
+
+**Description:**
+Adds a product to an existing order and automatically triggers related processes.
+
+---
+
+### 7. Procedure: XemTonKho (View Inventory)
+
+```sql
+EXEC XemTonKho;
+```
+
+**Description:**
+Displays the current inventory status.
+
+---
+
+### 8. Procedure: BaoCaoBanHang (Sales Report)
+
+```sql
+EXEC BaoCaoBanHang;
+```
+
+**Description:**
+Returns aggregated data for sales and revenue analysis.
+
+---
+
+### 9. End-to-End Workflow
+
+```sql
+EXEC TaoDonHang 'DH06', 'NVQ6_01', 'KH10';
+
+EXEC ThemSPVaoDon 'DH06', 'SP01', 2;
+
+SELECT * FROM DON_HANG WHERE MaDH = 'DH06';
+SELECT * FROM TON_KHO;
+```
+
+**Description:**
+
+* Unit price is automatically assigned
+* Total order value is calculated
+* Inventory is updated based on recipes
+* If ingredients are insufficient, the order will not be processed
 
 ---
 
