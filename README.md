@@ -48,11 +48,44 @@ Each branch operates independently, handling its own transactions and inventory 
 HappyBites/
 │
 ├── DBMaster/
-├── Q6/
-├── Q7/
-├── Q8/
+│   └── Database/
+│       ├── Create_tables.sql
+│       └── Insert_data.sql
+├── HappyBites_Q6/
+│   ├── Database/
+│   │   ├── Create_tables.sql
+│   │   └── Insert_data.sql
+│   ├── Procedure/
+│   │   └── Proc.sql
+│   └── Trigger/
+│       ├── CongKho.sql
+│       ├── SetDonGia.sql
+│       ├── TinhTongTien.sql
+│       └── TruKho.sql
+├── HappyBites_Q7/
+│   ├── Database/
+│   │   ├── Create_tables.sql
+│   │   └── Insert_data.sql
+│   ├── Procedure/
+│   │   └── Proc.sql
+│   └── Trigger/
+│       ├── CongKho.sql
+│       ├── SetDonGia.sql
+│       ├── TinhTongTien.sql
+│       └── TruKho.sql
+├── HappyBites_Q8/
+│   ├── Database/
+│   │   ├── Create_tables.sql
+│   │   └── Insert_data.sql
+│   ├── Procedure/
+│   │   └── Proc.sql
+│   └── Trigger/
+│       ├── CongKho.sql
+│       ├── SetDonGia.sql
+│       ├── TinhTongTien.sql
+│       └── TruKho.sql
 ├── docs/
-│   └── ERD.png
+│   └── ![ERD](docs/ERD_HappyBites.png)
 └── README.md
 ```
 
