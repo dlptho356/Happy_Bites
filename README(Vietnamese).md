@@ -36,6 +36,37 @@ Mỗi cơ sở dữ liệu chi nhánh hoạt động độc lập, xử lý giao
 
 ---
 
+## Truy vấn phân tán với Linked Server
+
+DBMaster được cấu hình để truy cập dữ liệu từ các cơ sở dữ liệu chi nhánh (Q6, Q7, Q8) thông qua Linked Server.
+
+Điều này cho phép thực hiện các truy vấn tổng hợp và báo cáo tập trung mà không cần can thiệp trực tiếp vào dữ liệu của từng chi nhánh.
+
+### Điểm chính
+
+* DBMaster có thể truy vấn dữ liệu từ các chi nhánh thông qua Linked Server
+* Các database chi nhánh vẫn hoạt động độc lập, không liên kết trực tiếp với nhau
+* Các truy vấn liên chi nhánh chỉ được thực hiện từ DBMaster
+
+### Ví dụ truy vấn
+
+```sql
+SELECT * FROM [LS_Q7].[HappyBites_Q7].dbo.DON_HANG;
+```
+
+---
+
+## Thiết lập Linked Server
+
+Dự án cung cấp file SQL để cấu hình Linked Server, giúp DBMaster kết nối với các database chi nhánh.
+
+Vị trí file:
+
+```plaintext
+DB_Master/LinkedServer/Create_LinkedServer.sql
+```
+
+
 ## Database Design (ERD)
 
 ![ERD](HappyBites%203.0/docs/ERD_HappyBites.png)
@@ -49,9 +80,11 @@ Mỗi cơ sở dữ liệu chi nhánh hoạt động độc lập, xử lý giao
 HappyBites/
 │
 ├── DBMaster/
-│   └── Database/
-│       ├── Create_tables.sql
-│       └── Insert_data.sql
+│   ├── Database/
+│   │   ├── Create_tables.sql
+│   │   └── Insert_data.sql
+│   └── LinkedServer/
+│       └──Create_LinkedServer.sql
 ├── HappyBites_Q6/
 │   ├── Database/
 │   │   ├── Create_tables.sql
