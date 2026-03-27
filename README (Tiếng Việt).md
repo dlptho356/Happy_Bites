@@ -188,6 +188,8 @@ SELECT * FROM DON_HANG WHERE MaDH = 'DH04';
 Tăng số lượng tồn kho khi nhập nguyên liệu.
 
 ```sql
+INSERT INTO NHAP_KHO VALUES ('NK03', GETDATE(), 'NVQ6_01')
+
 SELECT * FROM TON_KHO WHERE MaNL = 'NL01';
 
 INSERT INTO CHI_TIET_NHAP VALUES (15, 'NK03', 5000, 'NL01');
@@ -223,7 +225,7 @@ Trong trường hợp nguyên liệu không đủ, hệ thống sẽ không cho 
 ### 5. Procedure: TaoDonHang (Tạo đơn hàng)
 
 ```sql
-EXEC TaoDonHang 'DH05', 'NV01', 'KH11';
+EXEC TaoDonHang 'DH05', 'NVQ6_01', 'KH10';
 
 SELECT * FROM DON_HANG WHERE MaDH = 'DH05';
 ```
@@ -271,7 +273,7 @@ Trả về dữ liệu tổng hợp phục vụ phân tích doanh thu và bán h
 ### 9. Luồng hoạt động tổng thể
 
 ```sql
-EXEC TaoDonHang 'DH06', 'NV01', 'KH11';
+EXEC TaoDonHang 'DH06', 'NV01', 'KH10';
 
 EXEC ThemSPVaoDon 'DH06', 'SP01', 2;
 
