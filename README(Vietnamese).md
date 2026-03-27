@@ -42,9 +42,44 @@ Mỗi cơ sở dữ liệu chi nhánh hoạt động độc lập, xử lý giao
 HappyBites/
 │
 ├── DBMaster/
-├── Q6/
-├── Q7/
-├── Q8/
+│   └── Database/
+│       ├── Create_tables.sql
+│       └── Insert_data.sql
+├── HappyBites_Q6/
+│   ├── Database/
+│   │   ├── Create_tables.sql
+│   │   └── Insert_data.sql
+│   ├── Procedure/
+│   │   └── Proc.sql
+│   └── Trigger/
+│       ├── CongKho.sql
+│       ├── SetDonGia.sql
+│       ├── TinhTongTien.sql
+│       └── TruKho.sql
+├── HappyBites_Q7/
+│   ├── Database/
+│   │   ├── Create_tables.sql
+│   │   └── Insert_data.sql
+│   ├── Procedure/
+│   │   └── Proc.sql
+│   └── Trigger/
+│       ├── CongKho.sql
+│       ├── SetDonGia.sql
+│       ├── TinhTongTien.sql
+│       └── TruKho.sql
+├── HappyBites_Q8/
+│   ├── Database/
+│   │   ├── Create_tables.sql
+│   │   └── Insert_data.sql
+│   ├── Procedure/
+│   │   └── Proc.sql
+│   └── Trigger/
+│       ├── CongKho.sql
+│       ├── SetDonGia.sql
+│       ├── TinhTongTien.sql
+│       └── TruKho.sql
+├── docs/
+│   └── ![ERD](docs/ERD_HappyBites.png)
 └── README.md
 ```
 
