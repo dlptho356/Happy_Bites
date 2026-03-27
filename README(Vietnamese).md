@@ -11,8 +11,8 @@ Mỗi cơ sở dữ liệu chi nhánh hoạt động độc lập, xử lý giao
 
 ## Kiến trúc hệ thống
 
-* DBMaster: Cơ sở dữ liệu trung tâm
-* Q6, Q7, Q8: Các cơ sở dữ liệu chi nhánh độc lập
+* HappyBites_DBMaster: Cơ sở dữ liệu trung tâm
+* HappyBites_Q6, HappyBites_Q7, HappyBites_Q8: Các cơ sở dữ liệu chi nhánh độc lập
 * Các chi nhánh không truy cập trực tiếp lẫn nhau
 * Logic nghiệp vụ (trigger, procedure) được xử lý tại từng chi nhánh
 
@@ -96,10 +96,10 @@ HappyBites/
 
 1. Tạo và chạy script cho từng database:
 
-   * DBMaster
-   * Q6
-   * Q7
-   * Q8
+   * HappyBites_DBMaster
+   * HappyBites_Q6
+   * HappyBites_Q7
+   * HappyBites_Q8
 
 2. Đảm bảo mỗi database chi nhánh có:
 
@@ -122,15 +122,15 @@ SELECT * FROM TON_KHO;
 ### Bước 2: Tạo đơn hàng
 
 ```sql
-INSERT INTO KHACH_HANG VALUES ('KH01', N'Nguyen Van A', '0123456789');
+INSERT INTO KHACH_HANG VALUES ('KH11', N'Tên của bạn', 'SĐT của bạn');
 
-INSERT INTO DON_HANG VALUES ('DH01', GETDATE(), 0, 'NV01', 'KH01');
+INSERT INTO DON_HANG VALUES ('DH05', GETDATE(), 0, 'NV01', 'KH11');
 ```
 
 ### Bước 3: Thêm chi tiết đơn hàng
 
 ```sql
-INSERT INTO CHI_TIET_DON_HANG VALUES ('DH01', 'SP01', 2);
+INSERT INTO CHI_TIET_DON_HANG VALUES ('DH05', 'SP01', 2);
 ```
 
 ### Bước 4: Kiểm tra lại tồn kho
@@ -154,4 +154,4 @@ Tồn kho nguyên liệu sẽ tự động giảm dựa trên công thức sản
 
 ## Tác giả
 
-Doan Tho
+Đoàn Lê Phước Thọ
