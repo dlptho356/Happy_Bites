@@ -38,7 +38,7 @@ Each branch operates independently, handling its own transactions and inventory 
 
 ## Database Design (ERD)
 
-![ERD](docs/ERD_HappyBites.png)
+![ERD](HappyBites3.0/docs/ERD_HappyBites.png)
 
 ---
 
